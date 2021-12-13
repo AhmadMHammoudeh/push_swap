@@ -6,7 +6,7 @@
 /*   By: ahhammou <ahhammou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 11:14:00 by ahhammou          #+#    #+#             */
-/*   Updated: 2021/10/30 15:21:13 by ahhammou         ###   ########.fr       */
+/*   Updated: 2021/12/12 19:41:08 by ahhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@
 # include <string.h>
 # include <stdlib.h>
 # include <stdarg.h>
+# include <stdio.h> 
 
 int		ft_printf(const char *args, ...);
 int		ft_putchar(char c);
 int		ft_putnbr(int nb);
 int		ft_putstr(char *str);
 int		ft_strlen(const char *s);
+int		ft_numlen(int *s);
 int		ft_isalpha(int c);
 int		ft_putnbr_unsigned(unsigned int nb);
 int		ft_putnbr_hex(unsigned int nb);
