@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   push_swap copy.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahhammou <ahhammou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 13:38:02 by ahhammou          #+#    #+#             */
-/*   Updated: 2021/12/24 19:21:18 by ahhammou         ###   ########.fr       */
+/*   Updated: 2021/12/24 21:21:30 by ahhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ void ft_swap(t_data *numb, int i, int j)
 	int c;
 
 	// printf("j in swap: %d, numb->limita : %d\n", j, numb->limita);
-	// while (j > numb->limita)
-	// {
-	// 	// ft_push(numb, j);
-	// 	numb->limita++;
-	// }
+	while (j >= numb->limita)
+	{
+		ft_push(numb, j);
+		numb->limita++;
+	}
 	c = numb->list_a[i];
 	numb->list_a[i] = numb->list_a[j];
 	numb->list_a[j] = c;
@@ -202,9 +202,7 @@ void ft_sort(t_data *numb, int i, int j)
 	if (numb->length > 7)
 		div = numb->length / 2;
 	if (j - i <= div)
-	{
 		ft_swap(numb, i, j);
-	}
 	else
 		numb->list_a = ft_rotate(numb);
 }
@@ -216,8 +214,7 @@ void ft_solver(t_data *numb)
 	int k;
 
 	i = 0;
-	k = 0;
-	
+	k = numb->length / 5;
 	while (numb->list_a[i])
 	{
 		// printf("Loop : %d I: %d\n", k, i);
