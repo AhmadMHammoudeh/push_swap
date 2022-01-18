@@ -207,6 +207,66 @@ void ft_sort(t_data *numb, int i, int j)
 		numb->list_a = ft_rotate(numb);
 }
 
+int	ft_putchar_bin(char c)
+{
+	if (c > 47 && c < 58)
+		write(1, &c, 1);
+	return (1);
+}
+
+
+int	ft_putnbr_bin(unsigned int nb)
+{
+	int	i;
+
+	i = ft_numlength_h(nb);
+	if (nb > 1)
+	{
+		ft_putnbr_bin(nb / 2);
+	}
+	ft_putchar_bin(48 + nb % 2);
+	return (i);
+}
+
+int ft_bin_length(t_data *numb)
+{
+	if (numb->length < 2)
+		return (1);
+	if (numb->length < 4)
+		return (2);
+	if (numb->length < 8)
+		return (3);
+	if (numb->length < 16)
+		return (4);
+	if (numb->length < 32)
+		return (5);
+	if (numb->length < 64)
+		return (6);
+	if (numb->length < 128)
+		return (7);
+	if (numb->length < 256)
+		return (8);
+	if (numb->length < 512)
+		return (9);
+	if (numb->length < 1024)
+		return (10);
+	if (numb->length < 2048)
+		return (11);
+	return (12);
+}
+void ft_binary(t_data *numb)
+{
+	int bits;
+	int i;
+	
+	i = 0;
+	bits = ft_bin_length(numb);
+	while (i < bits)
+	{
+		ft_binary_sort(numb);
+		i++;
+	}
+}
 void ft_solver(t_data *numb)
 {
 	int i;
