@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap copy.c                                   :+:      :+:    :+:   */
+/*   push_swap-1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahhammou <ahhammou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 13:38:02 by ahhammou          #+#    #+#             */
-/*   Updated: 2021/12/24 21:21:30 by ahhammou         ###   ########.fr       */
+/*   Updated: 2022/01/21 08:15:16 by ahhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ void ft_swap(t_data *numb, int i, int j)
 	int c;
 
 	// printf("j in swap: %d, numb->limita : %d\n", j, numb->limita);
-	while (j >= numb->limita)
-	{
-		ft_push(numb, j);
-		numb->limita++;
-	}
+	// while (j > numb->limita)
+	// {
+	// 	// ft_push(numb, j);
+	// 	numb->limita++;
+	// }
 	c = numb->list_a[i];
 	numb->list_a[i] = numb->list_a[j];
 	numb->list_a[j] = c;
@@ -202,9 +202,71 @@ void ft_sort(t_data *numb, int i, int j)
 	if (numb->length > 7)
 		div = numb->length / 2;
 	if (j - i <= div)
+	{
 		ft_swap(numb, i, j);
+	}
 	else
 		numb->list_a = ft_rotate(numb);
+}
+
+int	ft_putchar_bin(char c)
+{
+	if (c > 47 && c < 58)
+		write(1, &c, 1);
+	return (1);
+}
+
+int	ft_putnbr_bin(unsigned int nb)
+{
+	int	i;
+
+	i = ft_numlength_h(nb);
+	if (nb > 1)
+	{
+		ft_putnbr_bin(nb / 2);
+	}
+	ft_putchar_bin(48 + nb % 2);
+	return (i);
+}
+
+int ft_bin_length(t_data *numb)
+{
+	if (numb->length < 2)
+		return (1);
+	if (numb->length < 4)
+		return (2);
+	if (numb->length < 8)
+		return (3);
+	if (numb->length < 16)
+		return (4);
+	if (numb->length < 32)
+		return (5);
+	if (numb->length < 64)
+		return (6);
+	if (numb->length < 128)
+		return (7);
+	if (numb->length < 256)
+		return (8);
+	if (numb->length < 512)
+		return (9);
+	if (numb->length < 1024)
+		return (10);
+	if (numb->length < 2048)
+		return (11);
+	return (12);
+}
+void ft_binary(t_data *numb)
+{
+	int bits;
+	int i;
+
+	i = 0;
+	bits = ft_bin_length(numb);
+	while (i < bits)
+	{
+		ft_binary_sort(numb);
+		i++;
+	}
 }
 
 void ft_solver(t_data *numb)
@@ -214,7 +276,8 @@ void ft_solver(t_data *numb)
 	int k;
 
 	i = 0;
-	k = numb->length / 5;
+	k = 0;
+	
 	while (numb->list_a[i])
 	{
 		// printf("Loop : %d I: %d\n", k, i);
@@ -340,7 +403,7 @@ int	main(int argv, char **argc)
 	i = 0;
 	while (numb.num[i])
 	{
-		// printf("Correct:%d My Answer: %d \n", numb.num[i], numb.list_a[i]);
+		printf("Correct:%d My Answer: %d \n", numb.num[i], numb.list_a[i]);
 		i++;
 	}
 	return (0);
