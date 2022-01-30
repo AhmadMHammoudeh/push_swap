@@ -6,7 +6,7 @@
 /*   By: ahhammou <ahhammou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 02:44:40 by ahhammou          #+#    #+#             */
-/*   Updated: 2022/01/25 02:54:45 by ahhammou         ###   ########.fr       */
+/*   Updated: 2022/01/27 08:10:15 by ahhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ long	ft_atoi(char *s, t_data *numb)
 	unsigned long	num;
 	int				sign;
 
-	numb->flag_int = 0;
 	i = 0;
 	num = 0;
 	sign = 1;
@@ -69,17 +68,16 @@ int	ft_bin(int n)
 
 void	ft_twolist(char **args, int argv, t_data *numb)
 {
-	int	i;
-
-	i = 1;
+	numb->input = 1;
 	numb->list_a = malloc(sizeof(int *) * argv);
 	numb->list_b = malloc(sizeof(int *) * argv);
 	numb->list_binary = malloc(sizeof(int *) * argv);
-	while (i < argv)
+	while (numb->input < argv)
 	{
-		numb->list_a[i - 1] = ft_atoi(args[i], numb);
-		numb->list_b[i - 1] = numb->list_a[i - 1];
-		i++;
+		ft_check_space(args[numb->input]);
+		numb->list_a[numb->input - 1] = ft_atoi(args[numb->input], numb);
+		numb->list_b[numb->input - 1] = numb->list_a[numb->input - 1];
+		numb->input++;
 	}
 }
 
