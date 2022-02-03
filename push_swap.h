@@ -6,7 +6,7 @@
 /*   By: ahhammou <ahhammou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 02:41:44 by ahhammou          #+#    #+#             */
-/*   Updated: 2022/01/25 07:45:03 by ahhammou         ###   ########.fr       */
+/*   Updated: 2022/01/27 08:03:33 by ahhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_data {
 	int	flag_int;
 	int	j;
 	int	push_b;
+	int	input;
 }	t_data;
 
 int		check_position(t_data *numb);

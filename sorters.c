@@ -6,7 +6,7 @@
 /*   By: ahhammou <ahhammou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 02:43:52 by ahhammou          #+#    #+#             */
-/*   Updated: 2022/01/25 08:12:30 by ahhammou         ###   ########.fr       */
+/*   Updated: 2022/01/27 07:47:49 by ahhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,8 @@ void	ft_sorter_five(t_data *numb)
 void	ft_sort_five(t_data *numb)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	if (check_position(numb))
 		return ;
 	while (i < 2)
