@@ -6,7 +6,7 @@
 /*   By: ahhammou <ahhammou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 02:44:40 by ahhammou          #+#    #+#             */
-/*   Updated: 2022/01/31 19:42:26 by ahhammou         ###   ########.fr       */
+/*   Updated: 2022/02/03 11:12:51 by ahhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,17 @@ void	ft_twolist(char **args, int argv, t_data *numb)
 	}
 	else
 	{
-		numb->list_a = malloc(sizeof(int *) * (argv + 1));
-		numb->list_b = malloc(sizeof(int *) * (argv + 1));
-		numb->list_binary = malloc(sizeof(int *) * (argv + 1));
+		numb->list_a = malloc(sizeof(int) * (argv));
+		numb->list_b = malloc(sizeof(int) * (argv));
+		numb->list_binary = malloc(sizeof(int) * (argv));
 		while (numb->input + 1 < argv)
 		{
 			numb->list_a[numb->input] = ft_atoi(args[numb->input + 1], numb);
 			numb->list_b[numb->input] = numb->list_a[numb->input];
 			numb->input++;
 		}
+		if (numb->list_a)
+			free(numb->list_a);
 	}
 }
 
@@ -122,17 +124,13 @@ void	ft_binary_list(t_data *numb)
 	int	i;
 	int	j;
 
-	numb->list_a_bin = malloc(sizeof(int *) * numb->input);
-	numb->num_bin = malloc(sizeof(int *) * numb->input);
 	i = 0;
 	while (i < numb->input)
 	{
 		j = 0;
-		while (numb->num[j] != numb->list_a[i])
+		while (numb->num[j] != numb->list_b[i])
 			j++;
-		numb->list_a_bin[i] = ft_bin(j);
 		numb->list_binary[i] = j;
-		numb->num_bin[i] = ft_bin(i);
 		i++;
 	}
 }

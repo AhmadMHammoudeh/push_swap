@@ -6,7 +6,7 @@
 /*   By: ahhammou <ahhammou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 13:38:02 by ahhammou          #+#    #+#             */
-/*   Updated: 2022/01/31 19:38:45 by ahhammou         ###   ########.fr       */
+/*   Updated: 2022/02/03 11:13:29 by ahhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,16 @@ void	ft_initial(t_data *numb)
 	numb->flag_int = 0;
 }
 
+void	ft_free(t_data *numb)
+{
+	if (numb->num)
+		free(numb->num);
+	if (numb->list_b)
+		free(numb->list_b);
+	if (numb->list_binary)
+		free(numb->list_binary);
+}
+
 int	main(int argv, char **argc)
 {
 	int		i;
@@ -86,14 +96,8 @@ int	main(int argv, char **argc)
 	ft_initial(&numb);
 	if (argv < 2)
 		return (0);
-	numb.num = ft_swapper(argc, argv, &numb);
+	ft_swapper(argc, argv, &numb);
 	ft_errors(&numb, argc, i);
 	ft_binary(&numb);
-	free(numb.num);
-	free(numb.list_a);
-	free(numb.list_b);
-	free(numb.list_binary);
-	free(numb.list_a_bin);
-	free(numb.num_bin);
 	return (0);
 }
