@@ -6,7 +6,7 @@
 /*   By: ahhammou <ahhammou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 02:43:52 by ahhammou          #+#    #+#             */
-/*   Updated: 2022/01/27 07:47:49 by ahhammou         ###   ########.fr       */
+/*   Updated: 2022/02/07 14:18:01 by ahhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,14 @@ void	ft_sorter_three(t_data *numb, int i)
 {
 	int	j;
 
-	while (i < numb->length - 1)
+	if (numb->input == 2)
+	{
+		check_position(numb);
+		ft_swap(numb, i);
+		ft_free(numb);
+		exit(1);
+	}
+	while (i < numb->input)
 	{
 		j = 0;
 		while (numb->list_b[i] != numb->num[j])
@@ -65,7 +72,7 @@ void	ft_sorter_five(t_data *numb)
 	int	i;
 
 	i = 2;
-	while (i < numb->length)
+	while (i < numb->input)
 	{
 		if (numb->list_b[3] == numb->num[0])
 		{
@@ -83,6 +90,7 @@ void	ft_sorter_five(t_data *numb)
 			ft_swap(numb, 2);
 		else
 			ft_rotate(numb);
+		i++;
 	}
 }
 

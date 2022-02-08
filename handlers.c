@@ -6,7 +6,7 @@
 /*   By: ahhammou <ahhammou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 02:44:40 by ahhammou          #+#    #+#             */
-/*   Updated: 2022/01/27 08:10:15 by ahhammou         ###   ########.fr       */
+/*   Updated: 2022/02/07 14:48:24 by ahhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ long	ft_atoi(char *s, t_data *numb)
 	i = 0;
 	num = 0;
 	sign = 1;
-	if (s[i] == '-')
+	if (s[0] == '-')
 	{
+		if (!s[++i])
+			exit (write(2, "Error\n", 6));
 		sign = -sign;
-		i++;
-	}
-	if (s[0] == '0')
-		return (0);
-	while (s[i])
+	}	
+	while (s[i] != '\0')
 	{
-		num *= 10;
-		num = s[i++] - 48 + num;
+		if (s[i] == '-')
+			exit (write(2, "Error\n", 6));
+		num = num * 10 + s[i++] - 48;
 	}
 	if (num > 2147483648 && sign == -1)
 		numb->flag_int = 1;
@@ -68,42 +68,54 @@ int	ft_bin(int n)
 
 void	ft_twolist(char **args, int argv, t_data *numb)
 {
-	numb->input = 1;
-	numb->list_a = malloc(sizeof(int *) * argv);
-	numb->list_b = malloc(sizeof(int *) * argv);
-	numb->list_binary = malloc(sizeof(int *) * argv);
-	while (numb->input < argv)
+	numb->input = 0;
+	if (argv < 3)
 	{
-		ft_check_space(args[numb->input]);
-		numb->list_a[numb->input - 1] = ft_atoi(args[numb->input], numb);
-		numb->list_b[numb->input - 1] = numb->list_a[numb->input - 1];
-		numb->input++;
+		numb->list_a = malloc(sizeof(int *) * (count(args[1], ' ')));
+		numb->list_b = malloc(sizeof(int *) * (count(args[1], ' ')));
+		numb->list_binary = malloc(sizeof(int *) * (count(args[1], ' ')));
+		ft_split(args[numb->input + 1], ' ', numb);
+		free(numb->list_a);
+	}
+	else
+	{
+		numb->list_a = malloc(sizeof(int) * (argv));
+		numb->list_b = malloc(sizeof(int) * (argv));
+		numb->list_binary = malloc(sizeof(int) * (argv));
+		while (numb->input + 1 < argv)
+		{
+			numb->list_a[numb->input] = ft_atoi(args[numb->input + 1], numb);
+			numb->list_b[numb->input] = numb->list_a[numb->input];
+			numb->input++;
+		}
+		if (numb->list_a)
+			free(numb->list_a);
 	}
 }
 
 int	ft_bin_length(t_data *numb)
 {
-	if (numb->length <= 2)
+	if (numb->input <= 2)
 		return (1);
-	if (numb->length <= 4)
+	if (numb->input <= 4)
 		return (2);
-	if (numb->length <= 8)
+	if (numb->input <= 8)
 		return (3);
-	if (numb->length <= 16)
+	if (numb->input <= 16)
 		return (4);
-	if (numb->length <= 32)
+	if (numb->input <= 32)
 		return (5);
-	if (numb->length <= 64)
+	if (numb->input <= 64)
 		return (6);
-	if (numb->length <= 128)
+	if (numb->input <= 128)
 		return (7);
-	if (numb->length <= 256)
+	if (numb->input <= 256)
 		return (8);
-	if (numb->length <= 512)
+	if (numb->input <= 512)
 		return (9);
-	if (numb->length <= 1024)
+	if (numb->input <= 1024)
 		return (10);
-	if (numb->length <= 2048)
+	if (numb->input <= 2048)
 		return (11);
 	return (12);
 }
@@ -113,17 +125,13 @@ void	ft_binary_list(t_data *numb)
 	int	i;
 	int	j;
 
-	numb->list_a_bin = malloc(sizeof(int *) * numb->length);
-	numb->num_bin = malloc(sizeof(int *) * numb->length);
 	i = 0;
-	while (i < numb->length)
+	while (i < numb->input)
 	{
 		j = 0;
-		while (numb->num[j] != numb->list_a[i])
+		while (numb->num[j] != numb->list_b[i])
 			j++;
-		numb->list_a_bin[i] = ft_bin(j);
 		numb->list_binary[i] = j;
-		numb->num_bin[i] = ft_bin(i);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ahhammou <ahhammou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 13:38:02 by ahhammou          #+#    #+#             */
-/*   Updated: 2022/01/27 08:08:38 by ahhammou         ###   ########.fr       */
+/*   Updated: 2022/02/08 14:40:47 by ahhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,72 +17,69 @@ int	check_position(t_data *numb)
 	int	i;
 
 	i = 0;
-	while (numb->list_b[i] == numb->num[i] && i <= numb->length)
+	while (numb->list_b[i] == numb->num[i] && i < numb->input)
 	{
 		i++;
 	}
-	if (numb->list_b[i] != numb->num[i])
+	if (i < numb->input)
 		return (0);
-	return (1);
+	ft_free(numb);
+	exit(1);
 }
 
-int	ft_check_input(char *arg)
+int	ft_check_input(char *arg, t_data *numb)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
-	while (arg[i] != '\0' && ((arg[i] >= 48 && arg[i] <= 57) \
-	|| arg[i] == ' '))
-		i++;
-	if (arg[i] == '-')
+	if (arg[0] == '-' && !arg[1])
 	{
-		while (arg[++i])
-		{
-			if (arg[i] != '\0' && \
-			((arg[i] >= 48 && arg[i] <= 57) || arg[i] == ' '))
-				j++;
-			else
-				break ;
-		}
+		ft_free(numb);
+		exit(write(2, "Error\n", 6));
 	}
-	if (arg[i] != '\0' || arg[i] == ' ')
-		return (0);
+	while (arg[i] != '\0' && ((arg[i] >= 48 && arg[i] <= 57) \
+	|| arg[i] == ' ' || arg[i] == '-'))
+		i++;
+	if (arg[i] != '\0')
+	{
+		ft_free(numb);
+		exit (write(2, "Error\n", 6));
+	}
 	return (1);
 }
 
-int	ft_errors(t_data *numb, char **argc, int i)
+void	ft_errors(t_data *numb, char **argc, int i)
 {
 	int	j;
 
+	j = 0;
 	while (argc[i])
 	{
-		j = ft_check_input(argc[i]);
-		if (j != 1)
-			return (write(2, "Error\n", 6));
-		i++;
+		ft_check_input(argc[i++], numb);
 	}
 	if (numb->flag_int == 1)
-		return (write(2, "Error\n", 6));
-	i = 0;
-	while (i < numb->length)
 	{
-		j = 0;
-		while (j < i)
-		{
-			if (numb->num[i] == numb->num[j])
-				return (write(2, "Error\n", 6));
-			j++;
-		}
-		i++;
+		ft_free(numb);
+		exit (write(2, "Error\n", 6));
 	}
-	return (0);
+	i = -1;
+	while (++i < numb->input)
+	{
+		j = -1;
+		while (++j < i)
+		{
+			if (numb->list_b[i] == numb->list_b[j])
+			{
+				ft_free(numb);
+				exit (write(2, "Error\n", 6));
+			}
+		}
+	}
 }
 
 void	ft_initial(t_data *numb)
 {
-	numb->num = NULL;
+	numb->num = 0;
 	numb->b = 0;
 	numb->limita = 0;
 	numb->push_b = 0;
@@ -96,9 +93,12 @@ int	main(int argv, char **argc)
 
 	i = 1;
 	ft_initial(&numb);
-	numb.num = ft_swapper(argc, argv, &numb);
-	if (ft_errors(&numb, argc, i))
-		return (-1);
+	if (argv < 2)
+		return (0);
+	ft_swapper(argc, argv, &numb);
+	ft_errors(&numb, argc, i);
+	check_position(&numb);
 	ft_binary(&numb);
+	ft_free(&numb);
 	return (0);
 }

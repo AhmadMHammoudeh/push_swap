@@ -6,13 +6,13 @@
 /*   By: ahhammou <ahhammou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 02:46:55 by ahhammou          #+#    #+#             */
-/*   Updated: 2022/01/25 08:12:20 by ahhammou         ###   ########.fr       */
+/*   Updated: 2022/02/08 14:41:56 by ahhammou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	*ft_brute_sort(int *num, int len)
+void	ft_brute_sort(t_data *numb, int len)
 {
 	int	i;
 	int	temp;
@@ -21,15 +21,14 @@ int	*ft_brute_sort(int *num, int len)
 	i = 0;
 	while (i < len)
 	{
-		if (num[i] > num[i + 1])
+		if (numb->num[i] > numb->num[i + 1])
 		{
-			temp = num[i];
-			num[i] = num [i + 1];
-			num[i + 1] = temp;
+			temp = numb->num[i];
+			numb->num[i] = numb->num [i + 1];
+			numb->num[i + 1] = temp;
 		}
 		i++;
 	}
-	return (num);
 }
 
 void	ft_binary_sort(t_data *numb, int j)
@@ -39,10 +38,8 @@ void	ft_binary_sort(t_data *numb, int j)
 
 	i = 0;
 	k = 0;
-	while (k < numb->length)
+	while (k < numb->input)
 	{
-		if (check_position(numb))
-			break ;
 		if (((numb->list_binary[i] >> j) & 1) == 1)
 			ft_rotate(numb);
 		else
@@ -56,27 +53,6 @@ void	ft_binary_sort(t_data *numb, int j)
 		ft_push_a(numb);
 }
 
-void	ft_final_check(t_data *numb)
-{
-	int	i;
-
-	i = 0;
-	while (i < numb->length)
-	{
-		if (check_position(numb))
-			break ;
-		if (numb->list_binary[i] != numb->num_bin[i])
-			ft_rotate(numb);
-		else
-		{
-			ft_push(numb);
-			i++;
-		}
-	}
-	while (--i > 0)
-		ft_push_a(numb);
-}
-
 void	ft_binary(t_data *numb)
 {
 	int	bits;
@@ -85,9 +61,9 @@ void	ft_binary(t_data *numb)
 	int	exp;
 
 	i = 0;
-	if (numb->length == 3)
+	if (numb->input <= 3)
 		ft_sort_three(numb);
-	else if (numb->length == 5)
+	else if (numb->input == 5)
 		ft_sort_five(numb);
 	else
 	{
@@ -104,25 +80,21 @@ void	ft_binary(t_data *numb)
 	}
 }
 
-int	*ft_swapper(char **args, int argv, t_data *numb)
+void	ft_swapper(char **args, int argv, t_data *numb)
 {
 	int	i;
 	int	j;
-	int	*num;
 
 	j = 0;
-	num = malloc(sizeof(int *) * (argv - 1));
+	numb->num = malloc(sizeof(int) * (argv));
 	i = 0;
-	while (i < argv - 1)
+	ft_twolist(args, argv, numb);
+	while (i < numb->input)
 	{
-		num[i] = ft_atoi(args[i + 1], numb);
+		numb->num[i] = numb->list_b[i];
 		i++;
 	}
-	numb->length = i;
-	numb->num = num;
 	while (j++ < i)
-		numb->num = ft_brute_sort(numb->num, i - 1);
-	ft_twolist(args, argv, numb);
+		ft_brute_sort(numb, i - 1);
 	ft_binary_list(numb);
-	return (numb->num);
 }
